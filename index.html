@@ -1,318 +1,224 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سنوکر کلپ سرک نو</title>
-    <style>
-        * {margin:0; padding:0; box-sizing:border-box; font-family:Tahoma, Arial;}
-        body {background:#1a5c44; padding:15px;}
-        .container {max-width:680px; margin:0 auto;}
-        h1 {text-align:center; color:white; margin-bottom:15px; font-size:20px;}
-        .card {background:white; border-radius:10px; padding:15px; margin-bottom:15px;}
-        h2 {color:#1a5c44; margin-bottom:10px; font-size:15px;}
-        .time-row {display:flex; gap:8px; margin:8px 0;}
-        .time-row button {padding:10px 12px; font-size:14px; border-radius:6px; border:none; background:#f39c12; color:white; cursor:pointer; white-space:nowrap;}
-        .time-row input {flex:1; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:15px;}
-        button.green {background:#27ae60; color:white; border:none; width:100%; padding:12px; border-radius:6px; font-size:15px; cursor:pointer; margin-top:5px;}
-        button.blue {background:#3498db; color:white; border:none; padding:6px 10px; border-radius:4px; font-size:13px; cursor:pointer;}
-        button.red {background:#c0392b; color:white; border:none; width:100%; padding:10px; border-radius:6px; font-size:14px; cursor:pointer; margin-top:10px;}
-        button.export-btn {background:#16a085; color:white; border:none; width:100%; padding:10px; border-radius:6px; font-size:14px; cursor:pointer; margin-bottom:5px;}
-        
-        .receipt {background:#fff9e6; border:3px solid #ffc107; border-radius:10px; padding:15px; margin-bottom:15px; display:none;}
-        .receipt.show {display:block;}
-        .receipt h3 {text-align:center; color:#856404; font-size:18px; margin-bottom:10px;}
-        .receipt p {padding:6px 0; font-size:15px; border-bottom:1px dashed #ddd;}
-        .receipt .total {font-size:18px; font-weight:bold; color:#c0392b; text-align:center; margin-top:10px; border:none;}
-        
-        table {width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;}
-        th, td {padding:8px 4px; text-align:center; border-bottom:1px solid #eee;}
-        th {background:#1a5c44; color:white;}
-        .daily-total {background:#fff3cd; border:2px solid #ffc107; border-radius:8px; padding:10px; margin-top:10px; text-align:center; font-size:16px; font-weight:bold; color:#856404;}
-        .open-section {background:#fff9e6; border-left:4px solid #f39c12; padding:10px; margin-bottom:10px; border-radius:4px;}
-        .open-section h3 {color:#856404; font-size:14px; margin-bottom:5px;}
-        .status-open {background:#fff3cd; color:#856404; font-weight:bold; padding:2px 6px; border-radius:3px; font-size:13px;}
-        .status-closed {color:#27ae60; font-weight:bold; font-size:13px;}
-        .save-info {background:#e8f5e9; border-left:4px solid #27ae60; padding:8px; margin-bottom:10px; border-radius:4px; font-size:13px; color:#2e7d32;}
-        
-        #endModal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:999;}
-        .modal-content {background:white; padding:20px; border-radius:10px; max-width:360px; width:90%;}
-        .modal-buttons {display:flex; gap:10px; margin-top:15px;}
-        .modal-buttons button {flex:1; padding:10px; border:none; border-radius:6px; font-size:14px; cursor:pointer;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سنوکر کلپ سرک نو</title>
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:tahoma;}
+body{background:#1a5c44; padding:12px;}
+.box{background:#fff; border-radius:8px; padding:15px; margin-bottom:12px;}
+h2{color:#1a5c44; font-size:16px; margin-bottom:10px;}
+input{width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:16px; margin-bottom:8px;}
+button{width:100%; padding:12px; border:none; border-radius:6px; font-size:16px; cursor:pointer; margin-bottom:8px;}
+.green{background:#27ae60; color:#fff;}
+.orange{background:#f39c12; color:#fff;}
+.purple{background:#8e44ad; color:#fff;}
+.red{background:#c0392b; color:#fff; margin-top:5px;}
+.blue{background:#3498db; color:#fff;}
+
+.fact-bg{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center;}
+.fact-bg.show{display:flex;}
+.fact{background:#fff9e6; border:3px solid #ffc107; border-radius:10px; padding:25px; width:90%; max-width:340px; text-align:center;}
+.fact h3{color:#856404; margin-bottom:15px;}
+.fact p{padding:6px 0; font-size:16px; border-bottom:1px dashed #ddd;}
+.fact .total{font-size:22px; font-weight:bold; color:#c0392b; margin-top:10px; border-bottom:none;}
+
+table{width:100%; border-collapse:collapse; margin-top:8px; font-size:13px;}
+th,td{padding:8px 4px; text-align:center; border-bottom:1px solid #eee;}
+th{background:#1a5c44; color:#fff;}
+.sum{background:#fff3cd; border:2px solid #ffc107; border-radius:6px; padding:10px; margin-top:10px; text-align:center; font-size:17px; font-weight:bold; color:#856404;}
+.search-res{background:#e3f2fd; border-radius:6px; padding:10px; margin-top:8px; display:none;}
+.search-res.show{display:block;}
+.open-sec{background:#fff9e6; border-left:4px solid #f39c12; padding:10px; margin-bottom:8px; border-radius:4px;}
+.open-item{display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ddd;}
+.s-btn{width:auto; padding:6px 12px; font-size:14px;}
+.txt-box{background:#f8f9fa; border:1px solid #ddd; border-radius:6px; padding:10px; margin-top:8px; font-size:12px; white-space:pre-wrap; display:none;}
+.txt-box.show{display:block;}
+.tip{font-size:12px; color:#666; margin-top:4px;}
+
+.modal-bg{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center;}
+.modal-bg.show{display:flex;}
+.modal{background:#fff; padding:20px; border-radius:8px; width:90%; max-width:340px;}
+.btns{display:flex; gap:10px; margin-top:15px;}
+.btns button{flex:1;}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎱 سنوکر کلپ سرک نو</h1>
+<h1 style="text-align:center; color:#fff; margin:10px 0;">🎱 سنوکر کلپ سرک نو</h1>
 
-        <!-- فاکتور -->
-        <div class="receipt" id="receipt">
-            <h3>🧾 فاکتور</h3>
-            <p><strong>تاریخ:</strong> <span id="rDate"></span></p>
-            <p><strong>نام مشتری:</strong> <span id="rName"></span></p>
-            <p><strong>ساعت شروع:</strong> <span id="rStart"></span></p>
-            <p><strong>ساعت ختم:</strong> <span id="rEnd"></span></p>
-            <p><strong>مدت زمان:</strong> <span id="rDuration"></span></p>
-            <p class="total">💰 مقدار پول: <span id="rCost"></span> افغانی</p>
-        </div>
+<div class="box">
+<h2>🔍 جستجوی مشتری</h2>
+<input type="text" id="srch" placeholder="اسم مشتری را بنویسید..." oninput="doSrch()">
+<div class="search-res" id="srchRes"></div>
+</div>
 
-        <div class="save-info">✅ اطلاعات خودکار ذخیره میشود</div>
+<div class="box">
+<h2>💾 پشتیبان‌گیری</h2>
+<button class="purple" onclick="saveFile()">📥 دانلود فایل</button>
+<button class="blue" onclick="showTxt()">📄 نمایش متن</button>
+<div class="txt-box" id="txtBox"></div>
+<p class="tip">فایل در پوشه دانلودها ذخیره می‌شود</p>
+</div>
 
-        <!-- خروجی گرفتن -->
-        <div class="card">
-            <h2>💾 پشتیبان گیری</h2>
-            <button class="export-btn" onclick="exportData()">📤 خروجی گرفتن</button>
-        </div>
+<div class="box">
+<h2>▶️ شروع بازی</h2>
+<input type="text" id="cName" placeholder="نام مشتری">
+<input type="time" id="sTime">
+<button class="orange" onclick="setNow()">⏰ همین الان</button>
+<button class="green" onclick="addGame()">✅ شروع بازی</button>
+</div>
 
-        <!-- شروع بازی -->
-        <div class="card">
-            <h2>▶️ شروع بازی جدید</h2>
-            <input type="text" id="customerName" placeholder="نام مشتری" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; margin-bottom:8px; font-size:15px;">
-            <div class="time-row">
-                <button onclick="setStartNow()">⏰ همین الان</button>
-                <input type="time" id="startTime">
-            </div>
-            <button class="green" onclick="startGame()">✅ شروع بازی</button>
-        </div>
+<div class="box">
+<div class="open-sec">
+<h3>🔵 بازی‌های در حال اجرا</h3>
+<div id="openList"><p style="color:#888;">هنوز بازی شروع نشده</p></div>
+</div>
 
-        <!-- بازی های در حال اجرا -->
-        <div class="card">
-            <div class="open-section">
-                <h3>🔵 بازی های در حال بازی</h3>
-                <div id="openGamesList">
-                    <p style="color:#888; font-size:14px;">هنوز بازی شروع نشده</p>
-                </div>
-            </div>
+<h2>📋 لیست معاملات</h2>
+<table>
+<thead><tr><th>#</th><th>تاریخ</th><th>مشتری</th><th>شروع</th><th>ختم</th><th>مدت</th><th>پول</th></tr></thead>
+<tbody id="allList"><tr><td colspan="7" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr></tbody>
+</table>
+<div class="sum">💰 مجموع امروز: <span id="daySum">۰</span> افغانی</div>
+<button class="red" onclick="if(confirm('حذف همه؟')){clearAll()}">🗑️ پاک کردن همه</button>
+</div>
 
-            <h2>📋 لیست کامل</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>تاریخ</th>
-                        <th>مشتری</th>
-                        <th>شروع</th>
-                        <th>ختم</th>
-                        <th>مدت</th>
-                        <th>پول</th>
-                        <th>وضعیت</th>
-                    </tr>
-                </thead>
-                <tbody id="gamesList">
-                    <tr><td colspan="8" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>
-                </tbody>
-            </table>
-            
-            <div class="daily-total">💰 مجموع امروز: <span id="dailySum">۰</span> افغانی</div>
-            
-            <button class="red" onclick="if(confirm('حذف همه؟')){clearAll()}">🗑️ پاک کردن همه</button>
-        </div>
-    </div>
+<!-- فاکتور -->
+<div class="fact-bg" id="factBg" onclick="closeFact()">
+<div class="fact" onclick="event.stopPropagation()">
+<h3>🧾 فاکتور</h3>
+<p><strong>تاریخ:</strong> <span id="fDate"></span></p>
+<p><strong>مشتری:</strong> <span id="fName"></span></p>
+<p><strong>شروع:</strong> <span id="fStart"></span></p>
+<p><strong>ختم:</strong> <span id="fEnd"></span></p>
+<p><strong>مدت:</strong> <span id="fDur"></span></p>
+<p class="total">💰 مبلغ: <span id="fCost"></span> افغانی</p>
+<button class="green" onclick="closeFact()">✓ تایید و بستن</button>
+</div>
+</div>
 
-    <!-- پنجره ختم بازی -->
-    <div id="endModal" onclick="if(event.target===this){closeModal()}">
-        <div class="modal-content">
-            <h3 style="text-align:center; margin-bottom:15px;">⏰ ختم بازی</h3>
-            <p style="margin-bottom:10px;"><strong>مشتری:</strong> <span id="modalName"></span></p>
-            <div class="time-row">
-                <button onclick="setEndNow()">⏰ همین الان</button>
-                <input type="time" id="modalEndTime">
-            </div>
-            <div class="modal-buttons">
-                <button style="background:#999; color:white;" onclick="closeModal()">لغو</button>
-                <button style="background:#27ae60; color:white;" onclick="endAndCalculate()">✅ ختم و محاسبه</button>
-            </div>
-        </div>
-    </div>
+<!-- پنجره ختم بازی -->
+<div class="modal-bg" id="endModalBg" onclick="closeEndModal()">
+<div class="modal" onclick="event.stopPropagation()">
+<h3 style="text-align:center; margin-bottom:15px;">⏰ ختم بازی</h3>
+<p style="margin-bottom:10px;"><strong>مشتری:</strong> <span id="mName"></span></p>
+<input type="time" id="eTime">
+<button class="orange" onclick="setEndNow()">⏰ همین الان</button>
+<div class="btns">
+<button style="background:#999;" onclick="closeEndModal()">لغو</button>
+<button class="green" onclick="endGame()">✅ ختم و محاسبه</button>
+</div>
+</div>
+</div>
 
-    <script>
-        let games = JSON.parse(localStorage.getItem('snookerGames') || '[]');
-        let currentEndingGameId = null;
+<script>
+let games = JSON.parse(localStorage.getItem('snookerData') || '[]');
+let selId = null;
 
-        function saveGames() {
-            localStorage.setItem('snookerGames', JSON.stringify(games));
-            renderGames();
-        }
+function save(){localStorage.setItem('snookerData', JSON.stringify(games)); updList();}
+function getDate(){let d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
+function getTime(){let d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function setNow(){document.getElementById('sTime').value=getTime();}
+function setEndNow(){document.getElementById('eTime').value=getTime();}
+function t12(t){if(!t)return'—';let [h,m]=t.split(':').map(Number);let p=h>=12?'ب':'ق';h=h%12||12;return h+':'+String(m).padStart(2,'0')+' '+p;}
+function fmtMin(m){if(!m)return'—';let h=Math.floor(m/60),mi=m%60;if(h===0)return mi+' دقیقه';if(mi===0)return h+' ساعت';return h+' ساعت و '+mi+' دقیقه';}
 
-        function getCurrentDate() {
-            const d = new Date();
-            return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
-        }
+function addGame(){
+let n=document.getElementById('cName').value.trim(),s=document.getElementById('sTime').value;
+if(!n){alert('نام مشتری را بنویسید');return;}
+if(!s){alert('ساعت شروع را انتخاب کنید');return;}
+let id=games.length?Math.max(...games.map(g=>g.id))+1:1;
+games.unshift({id:id,date:getDate(),name:n,start:s,startFmt:t12(s),end:null,endFmt:null,min:null,dur:null,cost:null,status:'open'});
+save();document.getElementById('cName').value='';document.getElementById('sTime').value='';
+}
 
-        function getCurrentTime() {
-            const d = new Date();
-            return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-        }
+function openEndModal(id){
+let g=games.find(x=>x.id===id);if(!g)return;
+selId=id;document.getElementById('mName').textContent=g.name;
+document.getElementById('eTime').value='';
+document.getElementById('endModalBg').classList.add('show');
+}
 
-        function setStartNow() {
-            document.getElementById('startTime').value = getCurrentTime();
-        }
+function closeEndModal(){document.getElementById('endModalBg').classList.remove('show');selId=null;}
+function showFact(g,e,c,d){
+document.getElementById('fDate').textContent=getDate();
+document.getElementById('fName').textContent=g.name;
+document.getElementById('fStart').textContent=g.startFmt;
+document.getElementById('fEnd').textContent=t12(e);
+document.getElementById('fDur').textContent=d;
+document.getElementById('fCost').textContent=c;
+document.getElementById('factBg').classList.add('show');
+}
+function closeFact(){document.getElementById('factBg').classList.remove('show');}
 
-        function setEndNow() {
-            document.getElementById('modalEndTime').value = getCurrentTime();
-        }
+function endGame(){
+let e=document.getElementById('eTime').value;if(!e){alert('ساعت ختم را انتخاب کنید');return;}
+let i=games.findIndex(x=>x.id===selId);if(i<0)return;
+let g=games[i];
+let [sH,sM]=g.start.split(':').map(Number),[eH,eM]=e.split(':').map(Number);
+let m=(eH*60+eM)-(sH*60+sM);if(m<0)m+=1440;if(m<=0){alert('ساعت ختم باید بعد از شروع باشد');return;}
+let cost=+(m*2.5).toFixed(1),dur=fmtMin(m);
+games[i].end=e;games[i].endFmt=t12(e);games[i].min=m;games[i].dur=dur;games[i].cost=cost;games[i].status='closed';
+save();closeEndModal();showFact(g,e,cost,dur);
+}
 
-        function to12Hour(time24) {
-            if (!time24) return '—';
-            let [h, m] = time24.split(':').map(Number);
-            const p = h >= 12 ? 'ب' : 'ق';
-            h = h % 12 || 12;
-            return h + ':' + String(m).padStart(2,'0') + ' ' + p;
-        }
+function saveFile(){
+if(games.length===0){alert('هنوز اطلاعاتی نیست');return;}
+let str=JSON.stringify(games,null,2);
+let b=new Blob([str],{type:'text/plain'});
+let u=URL.createObjectURL(b);
+let a=document.createElement('a');
+a.href=u;a.download='snooker-'+getDate().replace(/\//g,'-')+'.txt';
+document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);
+alert('✅ دانلود شد! در پوشه دانلودها پیدا کنید');
+}
 
-        function formatMins(mins) {
-            if (!mins) return '—';
-            const h = Math.floor(mins / 60);
-            const m = mins % 60;
-            if (h === 0) return m + ' دقیقه';
-            if (m === 0) return h + ' ساعت';
-            return h + ' ساعت و ' + m + ' دقیقه';
-        }
+function showTxt(){
+let box=document.getElementById('txtBox');
+box.classList.toggle('show');
+if(box.classList.contains('show')){
+if(games.length===0){box.textContent='هنوز اطلاعاتی وجود ندارد';return;}
+let txt='=== سنوکر کلپ — '+getDate()+' ===\n\n',total=0;
+games.slice().reverse().forEach(g=>{
+txt+='#'+g.id+' | '+g.date+' | '+g.name+'\n';
+txt+='شروع: '+g.startFmt+' | ختم: '+(g.endFmt||'باز')+'\n';
+txt+='مدت: '+(g.dur||'در حال بازی')+' | هزینه: '+(g.cost||'—')+' افغانی\n';
+txt+='------------------------------------\n';
+if(g.cost)total+=g.cost;
+});
+txt+='\n💰 مجموع کل: '+total.toFixed(1)+' افغانی';
+box.textContent=txt;
+}
+}
 
-        function startGame() {
-            const name = document.getElementById('customerName').value.trim();
-            const start = document.getElementById('startTime').value;
-            if (!name) { alert('نام مشتری را بنویسید'); return; }
-            if (!start) { alert('ساعت شروع را انتخاب کنید'); return; }
-            
-            const newId = games.length > 0 ? Math.max(...games.map(g=>g.id)) + 1 : 1;
-            games.unshift({
-                id: newId,
-                date: getCurrentDate(),
-                name: name,
-                startTime: start,
-                startDisplay: to12Hour(start),
-                endTime: null,
-                endDisplay: null,
-                minutes: null,
-                durationText: null,
-                cost: null,
-                status: 'open'
-            });
-            saveGames();
-            document.getElementById('customerName').value = '';
-            document.getElementById('startTime').value = '';
-        }
+function doSrch(){
+let v=document.getElementById('srch').value.trim().toLowerCase();
+let box=document.getElementById('srchRes');
+if(!v){box.classList.remove('show');return;}
+let f=games.filter(g=>g.name.toLowerCase().includes(v)&&g.status==='closed');
+if(f.length===0){box.innerHTML='<strong>نتیجه:</strong><br>معامله‌ای پیدا نشد';box.classList.add('show');return;}
+let t=f.reduce((s,g)=>s+g.cost,0);
+box.innerHTML='<strong>مشتری:</strong> '+f[0].name+'<br><strong>تعداد:</strong> '+f.length+' بار<br><strong>مجموع:</strong> '+t.toFixed(1)+' افغانی';
+box.classList.add('show');
+}
 
-        function openEndModal(id) {
-            const g = games.find(x=>x.id === id);
-            if (!g) return;
-            currentEndingGameId = id;
-            document.getElementById('modalName').textContent = g.name;
-            document.getElementById('modalEndTime').value = '';
-            document.getElementById('endModal').style.display = 'flex';
-        }
+function clearAll(){games=[];save();document.getElementById('txtBox').classList.remove('show');document.getElementById('srchRes').classList.remove('show');}
+function dayTotal(){let td=getDate();return games.filter(g=>g.date===td&&g.status==='closed').reduce((s,g)=>s+g.cost,0).toFixed(1);}
 
-        function closeModal() {
-            document.getElementById('endModal').style.display = 'none';
-            currentEndingGameId = null;
-        }
+function updList(){
+let openList=document.getElementById('openList');
+let open=games.filter(g=>g.status==='open');
+if(open.length===0){openList.innerHTML='<p style="color:#888;">هنوز بازی شروع نشده</p>';}
+else{openList.innerHTML=open.map(g=>'<div class="open-item"><div><strong>'+g.name+'</strong> — شروع: '+g.startFmt+'</div><button class="green s-btn" onclick="openEndModal('+g.id+')">⏰ ختم</button></div>').join('');}
 
-        function endAndCalculate() {
-            const endTime = document.getElementById('modalEndTime').value;
-            if (!endTime) { alert('ساعت ختم را انتخاب کنید'); return; }
-            
-            const idx = games.findIndex(x=>x.id === currentEndingGameId);
-            if (idx === -1) return;
-            
-            const g = games[idx];
-            const [sH, sM] = g.startTime.split(':').map(Number);
-            const [eH, eM] = endTime.split(':').map(Number);
-            let mins = (eH*60+eM) - (sH*60+sM);
-            if (mins < 0) mins += 1440;
-            if (mins <= 0) { alert('ساعت ختم باید بعد از شروع باشد'); return; }
-            
-            const cost = +(mins * 2.5).toFixed(1);
-            
-            games.splice(idx, 1);
-            games.unshift({
-                id: g.id,
-                date: g.date,
-                name: g.name,
-                startTime: g.startTime,
-                startDisplay: g.startDisplay,
-                endTime: endTime,
-                endDisplay: to12Hour(endTime),
-                minutes: mins,
-                durationText: formatMins(mins),
-                cost: cost,
-                status: 'closed'
-            });
-            
-            saveGames();
-            closeModal();
-            
-            document.getElementById('rDate').textContent = getCurrentDate();
-            document.getElementById('rName').textContent = g.name;
-            document.getElementById('rStart').textContent = to12Hour(g.startTime);
-            document.getElementById('rEnd').textContent = to12Hour(endTime);
-            document.getElementById('rDuration').textContent = formatMins(mins);
-            document.getElementById('rCost').textContent = cost;
-            document.getElementById('receipt').classList.add('show');
-        }
+let allList=document.getElementById('allList');
+document.getElementById('daySum').textContent=dayTotal();
+if(games.length===0){allList.innerHTML='<tr><td colspan="7" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr>';return;}
+allList.innerHTML=games.map(g=>'<tr><td>'+g.id+'</td><td>'+g.date+'</td><td>'+g.name+'</td><td>'+g.startFmt+'</td><td>'+(g.endFmt||'—')+'</td><td>'+(g.dur||'—')+'</td><td>'+(g.cost||'—')+'</td></tr>').join('');
+}
 
-        function exportData() {
-            if (games.length === 0) { alert('هنوز اطلاعاتی وجود ندارد'); return; }
-            const blob = new Blob([JSON.stringify(games, null, 2)], {type:'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `snooker-${getCurrentDate().replace(/\//g,'-')}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function clearAll() {
-            games = [];
-            saveGames();
-            document.getElementById('receipt').classList.remove('show');
-        }
-
-        function calcTotal() {
-            const today = getCurrentDate();
-            return games.filter(g=>g.date===today && g.status==='closed').reduce((s,g)=>s+g.cost, 0).toFixed(1);
-        }
-
-        function renderGames() {
-            const openList = document.getElementById('openGamesList');
-            const openGames = games.filter(g=>g.status==='open');
-            if (openGames.length === 0) {
-                openList.innerHTML = '<p style="color:#888; font-size:14px;">هنوز بازی شروع نشده</p>';
-            } else {
-                openList.innerHTML = openGames.map(g=>`
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ddd;">
-                        <div><strong>${g.name}</strong> — شروع: ${g.startDisplay}</div>
-                        <button class="blue" onclick="openEndModal(${g.id})">⏰ ختم</button>
-                    </div>
-                `).join('');
-            }
-
-            const list = document.getElementById('gamesList');
-            document.getElementById('dailySum').textContent = calcTotal();
-            
-            if (games.length === 0) {
-                list.innerHTML = '<tr><td colspan="8" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
-                return;
-            }
-            
-            list.innerHTML = games.map(g=>`
-                <tr>
-                    <td>${g.id}</td>
-                    <td>${g.date}</td>
-                    <td>${g.name}</td>
-                    <td>${g.startDisplay}</td>
-                    <td>${g.endDisplay || '—'}</td>
-                    <td>${g.durationText || '—'}</td>
-                    <td>${g.cost || '—'}</td>
-                    <td>${g.status==='open' 
-                        ? `<span class="status-open">باز</span><br><button class="blue" onclick="openEndModal(${g.id})" style="margin-top:2px;">ختم</button>` 
-                        : `<span class="status-closed">✅ بسته</span>`}
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        renderGames();
-    </script>
+updList();
+</script>
 </body>
 </html>
