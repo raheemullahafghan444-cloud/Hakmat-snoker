@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم کلپ سنوکر</title>
+    <title>سنوکر کلپ سرک نو</title>
     <style>
         * {
             margin: 0;
@@ -14,35 +14,42 @@
         body {
             background: linear-gradient(135deg, #0f4d38, #1a7a5c);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
         .container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
         }
         h1 {
             text-align: center;
             color: white;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #c8f0dc;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
         .card {
             background: white;
             border-radius: 10px;
-            padding: 22px;
-            margin-bottom: 18px;
+            padding: 18px;
+            margin-bottom: 15px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
         h2 {
             color: #0f4d38;
-            margin-bottom: 15px;
-            font-size: 17px;
+            margin-bottom: 12px;
+            font-size: 16px;
             border-bottom: 2px solid #28c782;
-            padding-bottom: 6px;
+            padding-bottom: 5px;
         }
         input, button {
             width: 100%;
-            padding: 11px;
-            margin: 6px 0;
+            padding: 10px;
+            margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 15px;
@@ -53,7 +60,7 @@
             border: none;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         button:hover {
             background: #156349;
@@ -64,6 +71,18 @@
         button.time-btn:hover {
             background: #219653;
         }
+        button.backup {
+            background: #3498db;
+        }
+        button.backup:hover {
+            background: #2980b9;
+        }
+        button.restore {
+            background: #9b59b6;
+        }
+        button.restore:hover {
+            background: #7d3c98;
+        }
         button.danger {
             background: #c0392b;
         }
@@ -72,8 +91,7 @@
         }
         .time-row {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            gap: 8px;
         }
         .time-row input {
             flex: 1;
@@ -82,8 +100,8 @@
             background: #fef9e7;
             border: 2px solid #f4d03f;
             border-radius: 6px;
-            padding: 18px;
-            margin-top: 15px;
+            padding: 15px;
+            margin-top: 12px;
             display: none;
         }
         .receipt.show {
@@ -92,30 +110,31 @@
         .receipt h3 {
             text-align: center;
             color: #7d5a00;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .receipt p {
-            padding: 4px 0;
+            padding: 3px 0;
             border-bottom: 1px dashed #ddd;
+            font-size: 14px;
         }
         .receipt .total {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #c0392b;
             text-align: center;
-            margin-top: 8px;
+            margin-top: 6px;
             border: none;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 8px;
+            margin-top: 5px;
         }
         th, td {
-            padding: 9px 5px;
+            padding: 8px 4px;
             text-align: center;
             border-bottom: 1px solid #eee;
-            font-size: 13px;
+            font-size: 12px;
         }
         th {
             background: #0f4d38;
@@ -125,23 +144,51 @@
             background: #e8f8f0;
             padding: 10px;
             border-radius: 5px;
-            margin-bottom: 12px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
         }
-        .debug-info {
-            background: #f0f0f0;
+        .daily-total {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            color: #856404;
+        }
+        .backup-note {
+            background: #e3f2fd;
             padding: 8px;
-            margin-top: 10px;
+            border-radius: 5px;
+            margin-top: 8px;
             font-size: 12px;
-            color: #555;
-            border-radius: 4px;
+            color: #0c5460;
+        }
+        input[type="file"] {
             display: none;
+        }
+        .file-label {
+            display: block;
+            background: #9b59b6;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .file-label:hover {
+            background: #7d3c98;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎱 سیستم کلپ سنوکر</h1>
+        <h1>🎱 سنوکر کلپ سرک نو</h1>
+        <p class="subtitle">سیستم مدیریت و محاسبه هزینه</p>
 
         <!-- 💰 اطلاعات قیمت -->
         <div class="card">
@@ -149,6 +196,15 @@
                 <strong>نرخ:</strong> ۱۵۰ افغانی در ساعت &nbsp;|&nbsp;
                 <strong>هر دقیقه:</strong> ۲.۵ افغانی
             </div>
+        </div>
+
+        <!-- 💛 بک‌آپ و بازیابی -->
+        <div class="card">
+            <h2>💛 بک‌آپ / بازیابی</h2>
+            <button class="backup" onclick="downloadBackup()">📥 دانلود بک‌آپ (برای ذخیره در درایو)</button>
+            <label class="file-label" for="restoreFile">📤 آپلود و بازیابی از فایل</label>
+            <input type="file" id="restoreFile" accept=".json" onchange="restoreBackup(event)">
+            <p class="backup-note">💡 توصیه: هر شب یک بار بک‌آپ دانلود کن و در گوگل درایو ذخیره کن ✅</p>
         </div>
 
         <!-- 📝 ثبت بازی جدید -->
@@ -170,16 +226,14 @@
 
             <!-- 🧾 فاکتور -->
             <div class="receipt" id="receipt">
-                <h3>🧾 فاکتور</h3>
+                <h3>🧾 فاکتور — سنوکر کلپ سرک نو</h3>
+                <p><strong>تاریخ:</strong> <span id="rDate"></span></p>
                 <p><strong>نام مشتری:</strong> <span id="rName"></span></p>
                 <p><strong>ساعت شروع:</strong> <span id="rStart"></span></p>
                 <p><strong>ساعت پایان:</strong> <span id="rEnd"></span></p>
                 <p><strong>مدت زمان:</strong> <span id="rDuration"></span> دقیقه</p>
                 <p class="total">💰 مقدار پول: <span id="rCost"></span> افغانی</p>
             </div>
-            
-            <!-- اطلاعات برای عیب‌یابی (مخفی است) -->
-            <div class="debug-info" id="debugInfo"></div>
         </div>
 
         <!-- 📋 لیست همه بازی‌ها -->
@@ -189,6 +243,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>تاریخ</th>
                         <th>مشتری</th>
                         <th>شروع</th>
                         <th>پایان</th>
@@ -197,9 +252,15 @@
                     </tr>
                 </thead>
                 <tbody id="gamesList">
-                    <tr><td colspan="6" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>
+                    <tr><td colspan="7" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>
                 </tbody>
             </table>
+            
+            <!-- 💰 مجموع ۲۴ ساعت -->
+            <div class="daily-total">
+                💰 مجموع امروز (۲۴ ساعت): <span id="dailySum">۰</span> افغانی
+            </div>
+            
             <br>
             <button class="danger" onclick="clearAll()">پاک کردن همه</button>
         </div>
@@ -220,6 +281,14 @@
             return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
         }
 
+        function getCurrentDate() {
+            const d = new Date();
+            let y = d.getFullYear();
+            let m = d.getMonth() + 1;
+            let day = d.getDate();
+            return (day < 10 ? '0' + day : day) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
+        }
+
         function setStartNow() {
             document.getElementById('startTime').value = getCurrentTime();
         }
@@ -236,6 +305,7 @@
             const name = document.getElementById('customerName').value.trim();
             const start = document.getElementById('startTime').value;
             const end = document.getElementById('endTime').value;
+            const today = getCurrentDate();
 
             if (!name) { alert('❌ نام مشتری را بنویسید!'); return; }
             if (!start) { alert('❌ ساعت شروع را مشخص کنید!'); return; }
@@ -251,7 +321,6 @@
             
             let minutes = (h2 * 60 + m2) - (h1 * 60 + m1);
             
-            // اگر بازی از نیمه شب گذشته
             if (minutes < 0) {
                 minutes += 24 * 60;
             }
@@ -264,11 +333,19 @@
             const cost = calculateCost(minutes);
             const newId = games.length > 0 ? games[0].id + 1 : 1;
 
-            const game = { id: newId, name: name, start: start, end: end, minutes: minutes, cost: cost };
+            const game = { 
+                id: newId, 
+                date: today,
+                name: name, 
+                start: start, 
+                end: end, 
+                minutes: minutes, 
+                cost: cost 
+            };
             games.unshift(game);
             saveGames();
 
-            // نمایش فاکتور
+            document.getElementById('rDate').textContent = today;
             document.getElementById('rName').textContent = name;
             document.getElementById('rStart').textContent = start;
             document.getElementById('rEnd').textContent = end;
@@ -276,20 +353,82 @@
             document.getElementById('rCost').textContent = cost;
             document.getElementById('receipt').classList.add('show');
 
-            // خالی کردن فرم
             document.getElementById('customerName').value = '';
             document.getElementById('startTime').value = '';
             document.getElementById('endTime').value = '';
         }
 
+        function getTodayDate() {
+            const d = new Date();
+            let y = d.getFullYear();
+            let m = d.getMonth() + 1;
+            let day = d.getDate();
+            return (day < 10 ? '0' + day : day) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
+        }
+
+        function calculateDailyTotal() {
+            const today = getTodayDate();
+            let sum = 0;
+            games.forEach(g => {
+                if (g.date === today) {
+                    sum += g.cost;
+                }
+            });
+            return sum.toFixed(1);
+        }
+
+        // 📥 دانلود بک‌آپ
+        function downloadBackup() {
+            if (games.length === 0) {
+                alert('⚠️ هنوز هیچ داده‌ای برای بک‌آپ وجود ندارد!');
+                return;
+            }
+            const today = getCurrentDate().replace(/\//g, '-');
+            const dataStr = JSON.stringify(games, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `snooker- sarak-nu-${today}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ بک‌آپ دانلود شد!\nحالا به گوگل درایو برو و این فایل را آپلود کن.');
+        }
+
+        // 📤 بازیابی از فایل بک‌آپ
+        function restoreBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm('⚠️ آیا مطمئن هستید؟ داده‌های فعلی با داده‌های فایل جایگزین می‌شود!')) {
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    games = data;
+                    saveGames();
+                    alert('✅ بازیابی موفق!');
+                } catch (err) {
+                    alert('❌ فایل معتبر نیست!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
         function renderGames() {
             const list = document.getElementById('gamesList');
+            const dailySum = calculateDailyTotal();
+            document.getElementById('dailySum').textContent = dailySum;
+            
             if (games.length === 0) {
-                list.innerHTML = '<tr><td colspan="6" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
+                list.innerHTML = '<tr><td colspan="7" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
                 return;
             }
             list.innerHTML = games.map(function(g) {
-                return '<tr><td>' + g.id + '</td><td>' + g.name + '</td><td>' + g.start + '</td><td>' + g.end + '</td><td>' + g.minutes + '</td><td>' + g.cost + ' اف</td></tr>';
+                return '<tr><td>' + g.id + '</td><td>' + g.date + '</td><td>' + g.name + '</td><td>' + g.start + '</td><td>' + g.end + '</td><td>' + g.minutes + '</td><td>' + g.cost + ' اف</td></tr>';
             }).join('');
         }
 
