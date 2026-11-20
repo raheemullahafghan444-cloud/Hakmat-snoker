@@ -23,7 +23,7 @@
         h1 {
             text-align: center;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             font-size: 22px;
         }
         .subtitle {
@@ -46,7 +46,7 @@
             border-bottom: 2px solid #28c782;
             padding-bottom: 5px;
         }
-        input, button {
+        input, button, select {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
@@ -65,11 +65,17 @@
         button:hover {
             background: #156349;
         }
-        button.time-btn {
+        button.start {
             background: #27ae60;
         }
-        button.time-btn:hover {
+        button.start:hover {
             background: #219653;
+        }
+        button.end {
+            background: #e67e22;
+        }
+        button.end:hover {
+            background: #d35400;
         }
         button.backup {
             background: #3498db;
@@ -89,11 +95,17 @@
         button.danger:hover {
             background: #a02f22;
         }
+        button.small {
+            padding: 4px 8px;
+            font-size: 12px;
+            width: auto;
+            margin: 0;
+        }
         .time-row {
             display: flex;
             gap: 8px;
         }
-        .time-row input {
+        .time-row input, .time-row select {
             flex: 1;
         }
         .receipt {
@@ -183,12 +195,29 @@
         .file-label:hover {
             background: #7d3c98;
         }
+        .active-game {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎱 سنوکر کلپ سرک نو</h1>
         <p class="subtitle">سیستم مدیریت و محاسبه هزینه</p>
+
+        <!-- 💛 بک‌آپ و بازیابی -->
+        <div class="card">
+            <h2>💛 بک‌آپ / بازیابی</h2>
+            <button class="backup" onclick="downloadBackup()">📥 دانلود بک‌آپ</button>
+            <label class="file-label" for="restoreFile">📤 بازیابی از فایل</label>
+            <input type="file" id="restoreFile" accept=".json" onchange="restoreBackup(event)">
+            <p class="backup-note">💡 توصیه: هر شب بک‌آپ دانلود کن و در جای امن ذخیره کن ✅</p>
+        </div>
 
         <!-- 💰 اطلاعات قیمت -->
         <div class="card">
@@ -198,42 +227,69 @@
             </div>
         </div>
 
-        <!-- 💛 بک‌آپ و بازیابی -->
-        <div class="card">
-            <h2>💛 بک‌آپ / بازیابی</h2>
-            <button class="backup" onclick="downloadBackup()">📥 دانلود بک‌آپ (برای ذخیره در درایو)</button>
-            <label class="file-label" for="restoreFile">📤 آپلود و بازیابی از فایل</label>
-            <input type="file" id="restoreFile" accept=".json" onchange="restoreBackup(event)">
-            <p class="backup-note">💡 توصیه: هر شب یک بار بک‌آپ دانلود کن و در گوگل درایو ذخیره کن ✅</p>
+        <!-- 🟢 بازی در حال اجرا -->
+        <div id="activeGameSection" class="active-game hidden">
+            <h2>🟢 بازی در حال انجام</h2>
+            <p><strong>نام مشتری:</strong> <span id="activeName"></span></p>
+            <p><strong>تاریخ:</strong> <span id="activeDate"></span></p>
+            <p><strong>ساعت شروع:</strong> <span id="activeStart"></span></p>
+            <button class="end" onclick="endGame()">🔴 ختم بازی</button>
         </div>
 
-        <!-- 📝 ثبت بازی جدید -->
-        <div class="card">
-            <h2>📝 ثبت بازی</h2>
+        <!-- 📝 شروع بازی جدید -->
+        <div id="newGameSection" class="card">
+            <h2>📝 شروع بازی جدید</h2>
             <input type="text" id="customerName" placeholder="نام مشتری">
             
             <div class="time-row">
-                <input type="time" id="startTime">
-                <button class="time-btn" onclick="setStartNow()">همین الان شروع</button>
+                <select id="startHour">
+                    <option value="">ساعت</option>
+                    <option value="1">۱</option>
+                    <option value="2">۲</option>
+                    <option value="3">۳</option>
+                    <option value="4">۴</option>
+                    <option value="5">۵</option>
+                    <option value="6">۶</option>
+                    <option value="7">۷</option>
+                    <option value="8">۸</option>
+                    <option value="9">۹</option>
+                    <option value="10">۱۰</option>
+                    <option value="11">۱۱</option>
+                    <option value="12">۱۲</option>
+                </select>
+                <select id="startMinute">
+                    <option value="">دقیقه</option>
+                    <option value="00">۰۰</option>
+                    <option value="05">۰۵</option>
+                    <option value="10">۱۰</option>
+                    <option value="15">۱۵</option>
+                    <option value="20">۲۰</option>
+                    <option value="25">۲۵</option>
+                    <option value="30">۳۰</option>
+                    <option value="35">۳۵</option>
+                    <option value="40">۴۰</option>
+                    <option value="45">۴۵</option>
+                    <option value="50">۵۰</option>
+                    <option value="55">۵۵</option>
+                </select>
+                <select id="startPeriod">
+                    <option value="AM">قبل از ظهر</option>
+                    <option value="PM">بعد از ظهر</option>
+                </select>
             </div>
             
-            <div class="time-row">
-                <input type="time" id="endTime">
-                <button class="time-btn" onclick="setEndNow()">همین الان ختم</button>
-            </div>
-            
-            <button onclick="calculateAndSave()">✅ محاسبه و ثبت</button>
+            <button class="start" onclick="startGame()">✅ شروع بازی</button>
+        </div>
 
-            <!-- 🧾 فاکتور -->
-            <div class="receipt" id="receipt">
-                <h3>🧾 فاکتور — سنوکر کلپ سرک نو</h3>
-                <p><strong>تاریخ:</strong> <span id="rDate"></span></p>
-                <p><strong>نام مشتری:</strong> <span id="rName"></span></p>
-                <p><strong>ساعت شروع:</strong> <span id="rStart"></span></p>
-                <p><strong>ساعت پایان:</strong> <span id="rEnd"></span></p>
-                <p><strong>مدت زمان:</strong> <span id="rDuration"></span> دقیقه</p>
-                <p class="total">💰 مقدار پول: <span id="rCost"></span> افغانی</p>
-            </div>
+        <!-- 🧾 فاکتور -->
+        <div class="receipt" id="receipt">
+            <h3>🧾 فاکتور — سنوکر کلپ سرک نو</h3>
+            <p><strong>تاریخ:</strong> <span id="rDate"></span></p>
+            <p><strong>نام مشتری:</strong> <span id="rName"></span></p>
+            <p><strong>ساعت شروع:</strong> <span id="rStart"></span></p>
+            <p><strong>ساعت پایان:</strong> <span id="rEnd"></span></p>
+            <p><strong>مدت زمان:</strong> <span id="rDuration"></span> دقیقه</p>
+            <p class="total">💰 مقدار پول: <span id="rCost"></span> افغانی</p>
         </div>
 
         <!-- 📋 لیست همه بازی‌ها -->
@@ -258,27 +314,30 @@
             
             <!-- 💰 مجموع ۲۴ ساعت -->
             <div class="daily-total">
-                💰 مجموع امروز (۲۴ ساعت): <span id="dailySum">۰</span> افغانی
+                💰 مجموع امروز: <span id="dailySum">۰</span> افغانی
             </div>
             
             <br>
-            <button class="danger" onclick="clearAll()">پاک کردن همه</button>
+            <button class="danger" onclick="clearAll()">🗑️ پاک کردن همه</button>
         </div>
     </div>
 
     <script>
         let games = JSON.parse(localStorage.getItem('snookerGames') || '[]');
+        let activeGame = JSON.parse(localStorage.getItem('activeGame') || 'null');
 
         function saveGames() {
             localStorage.setItem('snookerGames', JSON.stringify(games));
             renderGames();
         }
 
-        function getCurrentTime() {
-            const d = new Date();
-            let h = d.getHours();
-            let m = d.getMinutes();
-            return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+        function saveActiveGame() {
+            if (activeGame) {
+                localStorage.setItem('activeGame', JSON.stringify(activeGame));
+            } else {
+                localStorage.removeItem('activeGame');
+            }
+            updateActiveGameUI();
         }
 
         function getCurrentDate() {
@@ -289,158 +348,105 @@
             return (day < 10 ? '0' + day : day) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
         }
 
-        function setStartNow() {
-            document.getElementById('startTime').value = getCurrentTime();
+        function getTodayDate() {
+            return getCurrentDate();
         }
 
-        function setEndNow() {
-            document.getElementById('endTime').value = getCurrentTime();
+        // تبدیل ساعت ۱۲ ساعته به ۲۴ ساعته برای محاسبه
+        function to24Hour(hour, period) {
+            let h = parseInt(hour);
+            if (period === 'AM') {
+                if (h === 12) return 0;
+                return h;
+            } else {
+                if (h === 12) return 12;
+                return h + 12;
+            }
         }
 
-        function calculateCost(minutes) {
-            return +(minutes * 2.5).toFixed(1);
+        // فرمت نمایش ساعت به صورت ۱۲ ساعته
+        function formatTime12(hours, minutes, period) {
+            return hours + ':' + minutes + ' ' + (period === 'AM' ? 'ق.ظ' : 'ب.ظ');
         }
 
-        function calculateAndSave() {
+        // شروع بازی
+        function startGame() {
             const name = document.getElementById('customerName').value.trim();
-            const start = document.getElementById('startTime').value;
-            const end = document.getElementById('endTime').value;
-            const today = getCurrentDate();
+            const hour = document.getElementById('startHour').value;
+            const minute = document.getElementById('startMinute').value;
+            const period = document.getElementById('startPeriod').value;
 
             if (!name) { alert('❌ نام مشتری را بنویسید!'); return; }
-            if (!start) { alert('❌ ساعت شروع را مشخص کنید!'); return; }
-            if (!end) { alert('❌ ساعت پایان را مشخص کنید!'); return; }
+            if (!hour) { alert('❌ ساعت را انتخاب کنید!'); return; }
+            if (!minute) { alert('❌ دقیقه را انتخاب کنید!'); return; }
 
-            const startParts = start.split(':');
-            const endParts = end.split(':');
+            const today = getCurrentDate();
+            const startTime12 = formatTime12(hour, minute, period);
+            const startTime24 = to24Hour(hour, period) + ':' + minute;
+
+            activeGame = {
+                name: name,
+                date: today,
+                start12: startTime12,
+                start24: startTime24
+            };
+
+            saveActiveGame();
+
+            // خالی کردن فرم
+            document.getElementById('customerName').value = '';
+            document.getElementById('startHour').value = '';
+            document.getElementById('startMinute').value = '';
+        }
+
+        // ختم بازی
+        function endGame() {
+            if (!activeGame) return;
+
+            const endHour = prompt('ساعت پایان را بنویس (مثال: ۴):');
+            if (endHour === null) return;
             
-            const h1 = parseInt(startParts[0]);
-            const m1 = parseInt(startParts[1]);
-            const h2 = parseInt(endParts[0]);
-            const m2 = parseInt(endParts[1]);
+            const endMinute = prompt('دقیقه پایان را بنویس (مثال: ۳۰):');
+            if (endMinute === null) return;
             
-            let minutes = (h2 * 60 + m2) - (h1 * 60 + m1);
-            
-            if (minutes < 0) {
-                minutes += 24 * 60;
-            }
-            
-            if (minutes <= 0) {
-                alert('❌ ساعت پایان باید بعد از ساعت شروع باشد!');
-                return;
-            }
-            
-            const cost = calculateCost(minutes);
+            const endPeriod = confirm('بعد از ظهر است؟') ? 'PM' : 'AM';
+
+            if (!endHour || !endMinute) { alert('❌ مقادیر را کامل وارد کنید!'); return; }
+
+            const endTime12 = formatTime12(endHour, endMinute, endPeriod);
+            const endHour24 = to24Hour(endHour, endPeriod);
+            const startParts = activeGame.start24.split(':');
+            const startHour24 = parseInt(startParts[0]);
+            const startMin = parseInt(startParts[1]);
+            const endMin = parseInt(endMinute);
+
+            let minutes = (endHour24 * 60 + endMin) - (startHour24 * 60 + startMin);
+            if (minutes < 0) minutes += 24 * 60;
+            if (minutes <= 0) { alert('❌ ساعت پایان باید بعد از شروع باشد!'); return; }
+
+            const cost = +(minutes * 2.5).toFixed(1);
             const newId = games.length > 0 ? games[0].id + 1 : 1;
 
-            const game = { 
-                id: newId, 
-                date: today,
-                name: name, 
-                start: start, 
-                end: end, 
-                minutes: minutes, 
-                cost: cost 
+            const game = {
+                id: newId,
+                date: activeGame.date,
+                name: activeGame.name,
+                start: activeGame.start12,
+                end: endTime12,
+                minutes: minutes,
+                cost: cost
             };
+
             games.unshift(game);
             saveGames();
 
-            document.getElementById('rDate').textContent = today;
-            document.getElementById('rName').textContent = name;
-            document.getElementById('rStart').textContent = start;
-            document.getElementById('rEnd').textContent = end;
+            // نمایش فاکتور
+            document.getElementById('rDate').textContent = game.date;
+            document.getElementById('rName').textContent = game.name;
+            document.getElementById('rStart').textContent = game.start;
+            document.getElementById('rEnd').textContent = game.end;
             document.getElementById('rDuration').textContent = minutes;
             document.getElementById('rCost').textContent = cost;
             document.getElementById('receipt').classList.add('show');
 
-            document.getElementById('customerName').value = '';
-            document.getElementById('startTime').value = '';
-            document.getElementById('endTime').value = '';
-        }
-
-        function getTodayDate() {
-            const d = new Date();
-            let y = d.getFullYear();
-            let m = d.getMonth() + 1;
-            let day = d.getDate();
-            return (day < 10 ? '0' + day : day) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
-        }
-
-        function calculateDailyTotal() {
-            const today = getTodayDate();
-            let sum = 0;
-            games.forEach(g => {
-                if (g.date === today) {
-                    sum += g.cost;
-                }
-            });
-            return sum.toFixed(1);
-        }
-
-        // 📥 دانلود بک‌آپ
-        function downloadBackup() {
-            if (games.length === 0) {
-                alert('⚠️ هنوز هیچ داده‌ای برای بک‌آپ وجود ندارد!');
-                return;
-            }
-            const today = getCurrentDate().replace(/\//g, '-');
-            const dataStr = JSON.stringify(games, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `snooker- sarak-nu-${today}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            alert('✅ بک‌آپ دانلود شد!\nحالا به گوگل درایو برو و این فایل را آپلود کن.');
-        }
-
-        // 📤 بازیابی از فایل بک‌آپ
-        function restoreBackup(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            if (!confirm('⚠️ آیا مطمئن هستید؟ داده‌های فعلی با داده‌های فایل جایگزین می‌شود!')) {
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    games = data;
-                    saveGames();
-                    alert('✅ بازیابی موفق!');
-                } catch (err) {
-                    alert('❌ فایل معتبر نیست!');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function renderGames() {
-            const list = document.getElementById('gamesList');
-            const dailySum = calculateDailyTotal();
-            document.getElementById('dailySum').textContent = dailySum;
-            
-            if (games.length === 0) {
-                list.innerHTML = '<tr><td colspan="7" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
-                return;
-            }
-            list.innerHTML = games.map(function(g) {
-                return '<tr><td>' + g.id + '</td><td>' + g.date + '</td><td>' + g.name + '</td><td>' + g.start + '</td><td>' + g.end + '</td><td>' + g.minutes + '</td><td>' + g.cost + ' اف</td></tr>';
-            }).join('');
-        }
-
-        function clearAll() {
-            if (confirm('⚠️ مطمئن هستید همه بازی‌ها پاک شود؟')) {
-                games = [];
-                saveGames();
-                document.getElementById('receipt').classList.remove('show');
-            }
-        }
-
-        renderGames();
-    </script>
-</body>
-</html>
+            // بستن
