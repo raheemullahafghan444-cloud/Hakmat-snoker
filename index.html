@@ -6,7 +6,7 @@
 <title>سنوکر کلپ سرک نو</title>
 <style>
 *{margin:0; padding:0; box-sizing:border-box; font-family:tahoma;}
-body{background:#1a5c44; padding:12px;}
+body{background:#1a5c44; padding:12px; padding-bottom:80px;}
 .box{background:#fff; border-radius:8px; padding:15px; margin-bottom:12px;}
 h2{color:#1a5c44; font-size:16px; margin-bottom:10px;}
 input{width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:16px; margin-bottom:8px;}
@@ -16,6 +16,7 @@ button{width:100%; padding:12px; border:none; border-radius:6px; font-size:16px;
 .purple{background:#8e44ad; color:#fff;}
 .red{background:#c0392b; color:#fff; margin-top:5px;}
 .blue{background:#3498db; color:#fff;}
+.small-red{background:#e74c3c; color:#fff; padding:4px 8px; font-size:12px; width:auto;}
 
 .fact-bg{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center;}
 .fact-bg.show{display:flex;}
@@ -24,24 +25,29 @@ button{width:100%; padding:12px; border:none; border-radius:6px; font-size:16px;
 .fact p{padding:6px 0; font-size:16px; border-bottom:1px dashed #ddd;}
 .fact .total{font-size:22px; font-weight:bold; color:#c0392b; margin-top:10px; border-bottom:none;}
 
-table{width:100%; border-collapse:collapse; margin-top:8px; font-size:13px;}
-th,td{padding:8px 4px; text-align:center; border-bottom:1px solid #eee;}
+table{width:100%; border-collapse:collapse; margin-top:8px; font-size:11px;}
+th,td{padding:7px 3px; text-align:center; border-bottom:1px solid #eee;}
 th{background:#1a5c44; color:#fff;}
-.sum{background:#fff3cd; border:2px solid #ffc107; border-radius:6px; padding:10px; margin-top:10px; text-align:center; font-size:17px; font-weight:bold; color:#856404;}
+.sum{background:#fff3cd; border:2px solid #ffc107; border-radius:6px; padding:10px; margin-top:10px; text-align:center; font-size:16px; font-weight:bold; color:#856404;}
 .search-res{background:#e3f2fd; border-radius:6px; padding:10px; margin-top:8px; display:none;}
 .search-res.show{display:block;}
 .open-sec{background:#fff9e6; border-left:4px solid #f39c12; padding:10px; margin-bottom:8px; border-radius:4px;}
-.open-item{display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ddd;}
-.s-btn{width:auto; padding:6px 12px; font-size:14px;}
-.txt-box{background:#f8f9fa; border:1px solid #ddd; border-radius:6px; padding:10px; margin-top:8px; font-size:12px; white-space:pre-wrap; display:none;}
+.open-item{display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ddd; gap:5px; flex-wrap:wrap;}
+.s-btn{width:auto; padding:5px 8px; font-size:12px;}
+.txt-box{background:#f8f9fa; border:1px solid #ddd; border-radius:6px; padding:10px; margin-top:8px; font-size:11px; white-space:pre-wrap; display:none;}
 .txt-box.show{display:block;}
 .tip{font-size:12px; color:#666; margin-top:4px;}
+.footer-box{background:#2c3e50; color:#fff; border-radius:8px; padding:15px; margin-top:15px;}
 
 .modal-bg{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center;}
 .modal-bg.show{display:flex;}
 .modal{background:#fff; padding:20px; border-radius:8px; width:90%; max-width:340px;}
 .btns{display:flex; gap:10px; margin-top:15px;}
 .btns button{flex:1;}
+
+.del-modal-bg{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center;}
+.del-modal-bg.show{display:flex;}
+.del-modal{background:#fff; padding:20px; border-radius:8px; width:90%; max-width:320px; text-align:center;}
 </style>
 </head>
 <body>
@@ -51,14 +57,6 @@ th{background:#1a5c44; color:#fff;}
 <h2>🔍 جستجوی مشتری</h2>
 <input type="text" id="srch" placeholder="اسم مشتری را بنویسید..." oninput="doSrch()">
 <div class="search-res" id="srchRes"></div>
-</div>
-
-<div class="box">
-<h2>💾 پشتیبان‌گیری</h2>
-<button class="purple" onclick="saveFile()">📥 دانلود فایل</button>
-<button class="blue" onclick="showTxt()">📄 نمایش متن</button>
-<div class="txt-box" id="txtBox"></div>
-<p class="tip">فایل در پوشه دانلودها ذخیره می‌شود</p>
 </div>
 
 <div class="box">
@@ -77,11 +75,20 @@ th{background:#1a5c44; color:#fff;}
 
 <h2>📋 لیست معاملات</h2>
 <table>
-<thead><tr><th>#</th><th>تاریخ</th><th>مشتری</th><th>شروع</th><th>ختم</th><th>مدت</th><th>پول</th></tr></thead>
-<tbody id="allList"><tr><td colspan="7" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr></tbody>
+<thead><tr><th>#</th><th>تاریخ</th><th>مشتری</th><th>شروع</th><th>ختم</th><th>مدت</th><th>پول</th><th>حذف</th></tr></thead>
+<tbody id="allList"><tr><td colspan="8" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr></tbody>
 </table>
 <div class="sum">💰 مجموع امروز: <span id="daySum">۰</span> افغانی</div>
-<button class="red" onclick="if(confirm('حذف همه؟')){clearAll()}">🗑️ پاک کردن همه</button>
+<button class="red" onclick="confirmClearAll()">🗑️ پاک کردن همه معاملات</button>
+</div>
+
+<!-- ===== پایین صفحه: پشتیبان و نمایش اطلاعات ===== -->
+<div class="footer-box">
+<h2 style="color:#fff; margin-bottom:12px; border-bottom:1px solid #444; padding-bottom:8px;">💾 پشتیبان‌گیری و اطلاعات</h2>
+<button class="purple" onclick="saveFile()">📥 دانلود فایل پشتیبان</button>
+<button class="blue" onclick="showTxt()">📄 نمایش تمام اطلاعات</button>
+<div class="txt-box" id="txtBox" style="background:#34495e; color:#fff; border:none;"></div>
+<p class="tip" style="color:#bdc3c7;">فایل در پوشه دانلودها ذخیره می‌شود</p>
 </div>
 
 <!-- فاکتور -->
@@ -112,9 +119,34 @@ th{background:#1a5c44; color:#fff;}
 </div>
 </div>
 
+<!-- پنجره تایید حذف یک معامله -->
+<div class="del-modal-bg" id="delOneModalBg" onclick="closeDelOneModal()">
+<div class="del-modal" onclick="event.stopPropagation()">
+<h3 style="margin-bottom:15px;">⚠️ حذف معامله</h3>
+<p style="margin-bottom:15px;">آیا مطمئن هستید که این معامله را حذف کنید؟</p>
+<div style="display:flex; gap:10px;">
+<button style="background:#999; color:#fff; flex:1;" onclick="closeDelOneModal()">لغو</button>
+<button class="red" style="margin:0; flex:1;" onclick="confirmDeleteOne()">✅ بله، حذف کن</button>
+</div>
+</div>
+</div>
+
+<!-- پنجره تایید حذف همه -->
+<div class="del-modal-bg" id="delAllModalBg" onclick="closeDelAllModal()">
+<div class="del-modal" onclick="event.stopPropagation()">
+<h3 style="margin-bottom:15px;">⚠️ حذف همه معاملات</h3>
+<p style="margin-bottom:15px;">آیا مطمئن هستید که <strong>همه</strong> معاملات را حذف کنید؟ این عمل بازگشت‌ناپذیر است!</p>
+<div style="display:flex; gap:10px;">
+<button style="background:#999; color:#fff; flex:1;" onclick="closeDelAllModal()">لغو</button>
+<button class="red" style="margin:0; flex:1;" onclick="confirmDeleteAll()">✅ بله، همه را حذف کن</button>
+</div>
+</div>
+</div>
+
 <script>
 let games = JSON.parse(localStorage.getItem('snookerData') || '[]');
 let selId = null;
+let deleteTargetId = null;
 
 function save(){localStorage.setItem('snookerData', JSON.stringify(games)); updList();}
 function getDate(){let d=new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
@@ -163,6 +195,37 @@ games[i].end=e;games[i].endFmt=t12(e);games[i].min=m;games[i].dur=dur;games[i].c
 save();closeEndModal();showFact(g,e,cost,dur);
 }
 
+function openDeleteOneModal(id){
+deleteTargetId=id;
+document.getElementById('delOneModalBg').classList.add('show');
+}
+function closeDelOneModal(){
+document.getElementById('delOneModalBg').classList.remove('show');
+deleteTargetId=null;
+}
+function confirmDeleteOne(){
+if(deleteTargetId===null)return;
+games=games.filter(g=>g.id!==deleteTargetId);
+save();
+closeDelOneModal();
+document.getElementById('txtBox').classList.remove('show');
+document.getElementById('srchRes').classList.remove('show');
+}
+
+function confirmClearAll(){
+document.getElementById('delAllModalBg').classList.add('show');
+}
+function closeDelAllModal(){
+document.getElementById('delAllModalBg').classList.remove('show');
+}
+function confirmDeleteAll(){
+games=[];
+save();
+closeDelAllModal();
+document.getElementById('txtBox').classList.remove('show');
+document.getElementById('srchRes').classList.remove('show');
+}
+
 function saveFile(){
 if(games.length===0){alert('هنوز اطلاعاتی نیست');return;}
 let str=JSON.stringify(games,null,2);
@@ -171,7 +234,7 @@ let u=URL.createObjectURL(b);
 let a=document.createElement('a');
 a.href=u;a.download='snooker-'+getDate().replace(/\//g,'-')+'.txt';
 document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);
-alert('✅ دانلود شد! در پوشه دانلودها پیدا کنید');
+alert('✅ فایل دانلود شد! در پوشه دانلودها پیدا کنید');
 }
 
 function showTxt(){
@@ -203,7 +266,6 @@ box.innerHTML='<strong>مشتری:</strong> '+f[0].name+'<br><strong>تعداد:
 box.classList.add('show');
 }
 
-function clearAll(){games=[];save();document.getElementById('txtBox').classList.remove('show');document.getElementById('srchRes').classList.remove('show');}
 function dayTotal(){let td=getDate();return games.filter(g=>g.date===td&&g.status==='closed').reduce((s,g)=>s+g.cost,0).toFixed(1);}
 
 function updList(){
@@ -214,8 +276,8 @@ else{openList.innerHTML=open.map(g=>'<div class="open-item"><div><strong>'+g.nam
 
 let allList=document.getElementById('allList');
 document.getElementById('daySum').textContent=dayTotal();
-if(games.length===0){allList.innerHTML='<tr><td colspan="7" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr>';return;}
-allList.innerHTML=games.map(g=>'<tr><td>'+g.id+'</td><td>'+g.date+'</td><td>'+g.name+'</td><td>'+g.startFmt+'</td><td>'+(g.endFmt||'—')+'</td><td>'+(g.dur||'—')+'</td><td>'+(g.cost||'—')+'</td></tr>').join('');
+if(games.length===0){allList.innerHTML='<tr><td colspan="8" style="padding:20px; color:#888;">هنوز معامله‌ای نیست</td></tr>';return;}
+allList.innerHTML=games.map(g=>'<tr><td>'+g.id+'</td><td>'+g.date+'</td><td>'+g.name+'</td><td>'+g.startFmt+'</td><td>'+(g.endFmt||'—')+'</td><td>'+(g.dur||'—')+'</td><td>'+(g.cost||'—')+'</td><td><button class="small-red" onclick="openDeleteOneModal('+g.id+')">حذف</button></td></tr>').join('');
 }
 
 updList();
