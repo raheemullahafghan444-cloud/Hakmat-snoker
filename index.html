@@ -8,45 +8,44 @@
         * {margin:0; padding:0; box-sizing:border-box; font-family:Tahoma, Arial;}
         body {background:#1a5c44; padding:15px;}
         .container {max-width:680px; margin:0 auto;}
-        h1 {text-align:center; color:white; margin-bottom:20px;}
-        .card {background:white; border-radius:10px; padding:20px; margin-bottom:15px;}
-        h2 {color:#1a5c44; margin-bottom:15px; font-size:16px; border-bottom:2px solid #28c782; padding-bottom:5px;}
-        .time-row {display:flex; gap:8px; margin:6px 0;}
-        .time-row button {flex-shrink:0; width:auto; padding:12px 16px; margin:0;}
-        .time-row input {flex:1; margin:0;}
-        input, button {padding:12px; border:1px solid #ccc; border-radius:6px; font-size:15px;}
-        button {background:#1a5c44; color:white; border:none; cursor:pointer;}
-        button.green {background:#27ae60; width:100%; margin-top:8px;}
-        button.orange {background:#f39c12;}
-        button.blue {background:#3498db;}
-        button.red {background:#c0392b; width:100%; margin-top:8px;}
-        button.small {padding:6px 12px; font-size:13px; width:auto;}
+        h1 {text-align:center; color:white; margin-bottom:15px; font-size:20px;}
+        .card {background:white; border-radius:10px; padding:15px; margin-bottom:15px;}
+        h2 {color:#1a5c44; margin-bottom:10px; font-size:15px;}
+        .time-row {display:flex; gap:8px; margin:8px 0;}
+        .time-row button {padding:10px 12px; font-size:14px; border-radius:6px; border:none; background:#f39c12; color:white; cursor:pointer; white-space:nowrap;}
+        .time-row input {flex:1; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:15px;}
+        button.green {background:#27ae60; color:white; border:none; width:100%; padding:12px; border-radius:6px; font-size:15px; cursor:pointer; margin-top:5px;}
+        button.blue {background:#3498db; color:white; border:none; padding:6px 10px; border-radius:4px; font-size:13px; cursor:pointer;}
+        button.red {background:#c0392b; color:white; border:none; width:100%; padding:10px; border-radius:6px; font-size:14px; cursor:pointer; margin-top:10px;}
+        button.export-btn {background:#16a085; color:white; border:none; width:100%; padding:10px; border-radius:6px; font-size:14px; cursor:pointer; margin-bottom:5px;}
         
-        /* فاکتور در بالا */
-        .receipt {background:#fff9e6; border:3px solid #ffc107; border-radius:12px; padding:20px; margin-bottom:20px; display:none;}
+        .receipt {background:#fff9e6; border:3px solid #ffc107; border-radius:10px; padding:15px; margin-bottom:15px; display:none;}
         .receipt.show {display:block;}
-        .receipt h3 {text-align:center; color:#856404; font-size:20px; margin-bottom:15px;}
-        .receipt p {padding:8px 0; border-bottom:1px dashed #ddd; font-size:16px;}
-        .receipt .total {font-size:20px; font-weight:bold; color:#c0392b; text-align:center; margin-top:15px; border:none;}
+        .receipt h3 {text-align:center; color:#856404; font-size:18px; margin-bottom:10px;}
+        .receipt p {padding:6px 0; font-size:15px; border-bottom:1px dashed #ddd;}
+        .receipt .total {font-size:18px; font-weight:bold; color:#c0392b; text-align:center; margin-top:10px; border:none;}
         
-        table {width:100%; border-collapse:collapse; margin-top:10px;}
-        th, td {padding:10px 6px; text-align:center; border-bottom:1px solid #eee; font-size:12.5px;}
+        table {width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;}
+        th, td {padding:8px 4px; text-align:center; border-bottom:1px solid #eee;}
         th {background:#1a5c44; color:white;}
-        .daily-total {background:#fff3cd; border:2px solid #ffc107; border-radius:8px; padding:12px; margin-top:15px; text-align:center; font-size:17px; font-weight:bold; color:#856404;}
-        .open-section {background:#fff9e6; border-left:4px solid #f39c12; padding:10px; margin-bottom:15px; border-radius:6px;}
-        .open-section h3 {color:#856404; font-size:15px; margin-bottom:8px;}
-        .divider {height:2px; background:#ddd; margin:20px 0 10px;}
-        .status-open {background:#fff3cd; color:#856404; font-weight:bold; padding:3px 8px; border-radius:4px;}
-        .status-closed {color:#27ae60; font-weight:bold;}
-        #endModal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:100;}
-        .modal-content {background:white; padding:25px; border-radius:10px; max-width:400px; width:90%;}
+        .daily-total {background:#fff3cd; border:2px solid #ffc107; border-radius:8px; padding:10px; margin-top:10px; text-align:center; font-size:16px; font-weight:bold; color:#856404;}
+        .open-section {background:#fff9e6; border-left:4px solid #f39c12; padding:10px; margin-bottom:10px; border-radius:4px;}
+        .open-section h3 {color:#856404; font-size:14px; margin-bottom:5px;}
+        .status-open {background:#fff3cd; color:#856404; font-weight:bold; padding:2px 6px; border-radius:3px; font-size:13px;}
+        .status-closed {color:#27ae60; font-weight:bold; font-size:13px;}
+        .save-info {background:#e8f5e9; border-left:4px solid #27ae60; padding:8px; margin-bottom:10px; border-radius:4px; font-size:13px; color:#2e7d32;}
+        
+        #endModal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:999;}
+        .modal-content {background:white; padding:20px; border-radius:10px; max-width:360px; width:90%;}
+        .modal-buttons {display:flex; gap:10px; margin-top:15px;}
+        .modal-buttons button {flex:1; padding:10px; border:none; border-radius:6px; font-size:14px; cursor:pointer;}
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎱 سنوکر کلپ سرک نو</h1>
 
-        <!-- ✅ فاکتور در اینجا بالای لیست قرار دارد -->
+        <!-- فاکتور -->
         <div class="receipt" id="receipt">
             <h3>🧾 فاکتور</h3>
             <p><strong>تاریخ:</strong> <span id="rDate"></span></p>
@@ -57,27 +56,33 @@
             <p class="total">💰 مقدار پول: <span id="rCost"></span> افغانی</p>
         </div>
 
-        <!-- شروع بازی جدید -->
+        <div class="save-info">✅ اطلاعات خودکار ذخیره میشود</div>
+
+        <!-- خروجی گرفتن -->
         <div class="card">
-            <h2>▶️ شروع بازی جدید</h2>
-            <input type="text" id="customerName" placeholder="نام مشتری">
-            <div class="time-row">
-                <button class="orange" onclick="setStartNow()">⏰ همین الان شروع</button>
-                <input type="time" id="startTime">
-            </div>
-            <button class="green" onclick="startGame()">✅ فقط شروع کن</button>
+            <h2>💾 پشتیبان گیری</h2>
+            <button class="export-btn" onclick="exportData()">📤 خروجی گرفتن</button>
         </div>
 
-        <!-- بازی‌های باز -->
+        <!-- شروع بازی -->
+        <div class="card">
+            <h2>▶️ شروع بازی جدید</h2>
+            <input type="text" id="customerName" placeholder="نام مشتری" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; margin-bottom:8px; font-size:15px;">
+            <div class="time-row">
+                <button onclick="setStartNow()">⏰ همین الان</button>
+                <input type="time" id="startTime">
+            </div>
+            <button class="green" onclick="startGame()">✅ شروع بازی</button>
+        </div>
+
+        <!-- بازی های در حال اجرا -->
         <div class="card">
             <div class="open-section">
-                <h3>🔵 بازی‌های در حال بازی</h3>
+                <h3>🔵 بازی های در حال بازی</h3>
                 <div id="openGamesList">
                     <p style="color:#888; font-size:14px;">هنوز بازی شروع نشده</p>
                 </div>
             </div>
-
-            <div class="divider"></div>
 
             <h2>📋 لیست کامل</h2>
             <table>
@@ -88,8 +93,8 @@
                         <th>مشتری</th>
                         <th>شروع</th>
                         <th>ختم</th>
-                        <th>مدت زمان</th>
-                        <th>هزینه</th>
+                        <th>مدت</th>
+                        <th>پول</th>
                         <th>وضعیت</th>
                     </tr>
                 </thead>
@@ -98,27 +103,24 @@
                 </tbody>
             </table>
             
-            <div class="daily-total">
-                💰 مجموع امروز: <span id="dailySum">۰</span> افغانی
-            </div>
+            <div class="daily-total">💰 مجموع امروز: <span id="dailySum">۰</span> افغانی</div>
             
-            <br>
-            <button class="red" onclick="clearAll()">🗑️ پاک کردن همه</button>
+            <button class="red" onclick="if(confirm('حذف همه؟')){clearAll()}">🗑️ پاک کردن همه</button>
         </div>
     </div>
 
     <!-- پنجره ختم بازی -->
-    <div id="endModal">
+    <div id="endModal" onclick="if(event.target===this){closeModal()}">
         <div class="modal-content">
-            <h3 style="margin-bottom:15px; text-align:center;">⏰ ختم بازی</h3>
+            <h3 style="text-align:center; margin-bottom:15px;">⏰ ختم بازی</h3>
             <p style="margin-bottom:10px;"><strong>مشتری:</strong> <span id="modalName"></span></p>
             <div class="time-row">
-                <button class="orange" onclick="setModalEndNow()">⏰ همین الان ختم</button>
+                <button onclick="setEndNow()">⏰ همین الان</button>
                 <input type="time" id="modalEndTime">
             </div>
-            <div style="display:flex; gap:10px; margin-top:15px;">
-                <button style="background:#999; flex:1;" onclick="closeModal()">لغو</button>
-                <button class="green" style="flex:1;" onclick="endAndCalculate()">✅ ختم و محاسبه</button>
+            <div class="modal-buttons">
+                <button style="background:#999; color:white;" onclick="closeModal()">لغو</button>
+                <button style="background:#27ae60; color:white;" onclick="endAndCalculate()">✅ ختم و محاسبه</button>
             </div>
         </div>
     </div>
@@ -134,53 +136,49 @@
 
         function getCurrentDate() {
             const d = new Date();
-            const y = d.getFullYear(), m = d.getMonth() + 1, day = d.getDate();
-            return (day < 10 ? '0' + day : day) + '/' + (m < 10 ? '0' + m : m) + '/' + y;
+            return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
         }
 
-        function getCurrentTimeInput() {
+        function getCurrentTime() {
             const d = new Date();
-            const h = d.getHours(), m = d.getMinutes();
-            return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+            return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
         }
 
         function setStartNow() {
-            document.getElementById('startTime').value = getCurrentTimeInput();
+            document.getElementById('startTime').value = getCurrentTime();
         }
 
-        function setModalEndNow() {
-            document.getElementById('modalEndTime').value = getCurrentTimeInput();
+        function setEndNow() {
+            document.getElementById('modalEndTime').value = getCurrentTime();
         }
 
         function to12Hour(time24) {
             if (!time24) return '—';
-            const [h, m] = time24.split(':').map(Number);
-            const marker = h >= 12 ? 'ب' : 'ق';
-            let h12 = h % 12;
-            if (h12 === 0) h12 = 12;
-            return h12 + ':' + (m < 10 ? '0' + m : m) + ' ' + marker;
+            let [h, m] = time24.split(':').map(Number);
+            const p = h >= 12 ? 'ب' : 'ق';
+            h = h % 12 || 12;
+            return h + ':' + String(m).padStart(2,'0') + ' ' + p;
         }
 
-        function formatMinutes(totalMinutes) {
-            if (!totalMinutes) return '—';
-            const hours = Math.floor(totalMinutes / 60);
-            const mins = totalMinutes % 60;
-            if (hours === 0) return mins + ' دقیقه';
-            if (mins === 0) return hours + ' ساعت';
-            return hours + ' ساعت و ' + mins + ' دقیقه';
+        function formatMins(mins) {
+            if (!mins) return '—';
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            if (h === 0) return m + ' دقیقه';
+            if (m === 0) return h + ' ساعت';
+            return h + ' ساعت و ' + m + ' دقیقه';
         }
 
         function startGame() {
             const name = document.getElementById('customerName').value.trim();
             const start = document.getElementById('startTime').value;
-            const today = getCurrentDate();
-            if (!name) { alert('❌ نام مشتری را بنویسید!'); return; }
-            if (!start) { alert('❌ ساعت شروع را وارد کن!'); return; }
+            if (!name) { alert('نام مشتری را بنویسید'); return; }
+            if (!start) { alert('ساعت شروع را انتخاب کنید'); return; }
             
-            const newId = games.length > 0 ? Math.max(...games.map(g => g.id)) + 1 : 1;
+            const newId = games.length > 0 ? Math.max(...games.map(g=>g.id)) + 1 : 1;
             games.unshift({
                 id: newId,
-                date: today,
+                date: getCurrentDate(),
                 name: name,
                 startTime: start,
                 startDisplay: to12Hour(start),
@@ -196,11 +194,11 @@
             document.getElementById('startTime').value = '';
         }
 
-        function openEndModal(gameId) {
-            const game = games.find(g => g.id === gameId);
-            if (!game) return;
-            currentEndingGameId = gameId;
-            document.getElementById('modalName').textContent = game.name;
+        function openEndModal(id) {
+            const g = games.find(x=>x.id === id);
+            if (!g) return;
+            currentEndingGameId = id;
+            document.getElementById('modalName').textContent = g.name;
             document.getElementById('modalEndTime').value = '';
             document.getElementById('endModal').style.display = 'flex';
         }
@@ -212,86 +210,92 @@
 
         function endAndCalculate() {
             const endTime = document.getElementById('modalEndTime').value;
-            if (!endTime) { alert('❌ ساعت ختم را وارد کن!'); return; }
+            if (!endTime) { alert('ساعت ختم را انتخاب کنید'); return; }
             
-            const gameIndex = games.findIndex(g => g.id === currentEndingGameId);
-            if (gameIndex === -1) return;
+            const idx = games.findIndex(x=>x.id === currentEndingGameId);
+            if (idx === -1) return;
             
-            const game = games[gameIndex];
-            const [sH, sM] = game.startTime.split(':').map(Number);
+            const g = games[idx];
+            const [sH, sM] = g.startTime.split(':').map(Number);
             const [eH, eM] = endTime.split(':').map(Number);
-            let minutes = (eH * 60 + eM) - (sH * 60 + sM);
-            if (minutes < 0) minutes += 24 * 60;
-            if (minutes <= 0) { alert('❌ ساعت ختم باید بعد از شروع باشد!'); return; }
+            let mins = (eH*60+eM) - (sH*60+sM);
+            if (mins < 0) mins += 1440;
+            if (mins <= 0) { alert('ساعت ختم باید بعد از شروع باشد'); return; }
             
-            const cost = +(minutes * 2.5).toFixed(1);
+            const cost = +(mins * 2.5).toFixed(1);
             
-            // حذف بازی از محل فعلی
-            games.splice(gameIndex, 1);
-            
-            // اضافه کردن اطلاعات ختم و قرار دادن در بالای لیست
-            const closedGame = {
-                id: game.id,
-                date: game.date,
-                name: game.name,
-                startTime: game.startTime,
-                startDisplay: game.startDisplay,
+            games.splice(idx, 1);
+            games.unshift({
+                id: g.id,
+                date: g.date,
+                name: g.name,
+                startTime: g.startTime,
+                startDisplay: g.startDisplay,
                 endTime: endTime,
                 endDisplay: to12Hour(endTime),
-                minutes: minutes,
-                durationText: formatMinutes(minutes),
+                minutes: mins,
+                durationText: formatMins(mins),
                 cost: cost,
                 status: 'closed'
-            };
-            
-            games.unshift(closedGame);
+            });
             
             saveGames();
             closeModal();
             
-            // نمایش فاکتور در بالای صفحه
-            document.getElementById('rDate').textContent = closedGame.date;
-            document.getElementById('rName').textContent = closedGame.name;
-            document.getElementById('rStart').textContent = closedGame.startDisplay;
-            document.getElementById('rEnd').textContent = closedGame.endDisplay;
-            document.getElementById('rDuration').textContent = closedGame.durationText;
-            document.getElementById('rCost').textContent = closedGame.cost;
+            document.getElementById('rDate').textContent = getCurrentDate();
+            document.getElementById('rName').textContent = g.name;
+            document.getElementById('rStart').textContent = to12Hour(g.startTime);
+            document.getElementById('rEnd').textContent = to12Hour(endTime);
+            document.getElementById('rDuration').textContent = formatMins(mins);
+            document.getElementById('rCost').textContent = cost;
             document.getElementById('receipt').classList.add('show');
         }
 
-        function calculateDailyTotal() {
+        function exportData() {
+            if (games.length === 0) { alert('هنوز اطلاعاتی وجود ندارد'); return; }
+            const blob = new Blob([JSON.stringify(games, null, 2)], {type:'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `snooker-${getCurrentDate().replace(/\//g,'-')}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            games = [];
+            saveGames();
+            document.getElementById('receipt').classList.remove('show');
+        }
+
+        function calcTotal() {
             const today = getCurrentDate();
-            let sum = 0;
-            games.forEach(g => {
-                if (g.date === today && g.status === 'closed') sum += g.cost;
-            });
-            return sum.toFixed(1);
+            return games.filter(g=>g.date===today && g.status==='closed').reduce((s,g)=>s+g.cost, 0).toFixed(1);
         }
 
         function renderGames() {
             const openList = document.getElementById('openGamesList');
-            const tableList = document.getElementById('gamesList');
-            document.getElementById('dailySum').textContent = calculateDailyTotal();
-            
-            const openGames = games.filter(g => g.status === 'open');
-            
+            const openGames = games.filter(g=>g.status==='open');
             if (openGames.length === 0) {
                 openList.innerHTML = '<p style="color:#888; font-size:14px;">هنوز بازی شروع نشده</p>';
             } else {
-                openList.innerHTML = openGames.map(g => `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed #f0d080;">
+                openList.innerHTML = openGames.map(g=>`
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #ddd;">
                         <div><strong>${g.name}</strong> — شروع: ${g.startDisplay}</div>
-                        <button class="small blue" onclick="openEndModal(${g.id})">⏰ ختم</button>
+                        <button class="blue" onclick="openEndModal(${g.id})">⏰ ختم</button>
                     </div>
                 `).join('');
             }
+
+            const list = document.getElementById('gamesList');
+            document.getElementById('dailySum').textContent = calcTotal();
             
             if (games.length === 0) {
-                tableList.innerHTML = '<tr><td colspan="8" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
+                list.innerHTML = '<tr><td colspan="8" style="padding:20px; color:#888;">هنوز بازی ثبت نشده</td></tr>';
                 return;
             }
             
-            tableList.innerHTML = games.map(g => `
+            list.innerHTML = games.map(g=>`
                 <tr>
                     <td>${g.id}</td>
                     <td>${g.date}</td>
@@ -300,21 +304,12 @@
                     <td>${g.endDisplay || '—'}</td>
                     <td>${g.durationText || '—'}</td>
                     <td>${g.cost || '—'}</td>
-                    <td>
-                        ${g.status === 'open' 
-                            ? `<span class="status-open">باز</span><br><button class="small blue" onclick="openEndModal(${g.id})">ختم</button>` 
-                            : `<span class="status-closed">✅ بسته</span>`}
+                    <td>${g.status==='open' 
+                        ? `<span class="status-open">باز</span><br><button class="blue" onclick="openEndModal(${g.id})" style="margin-top:2px;">ختم</button>` 
+                        : `<span class="status-closed">✅ بسته</span>`}
                     </td>
                 </tr>
             `).join('');
-        }
-
-        function clearAll() {
-            if (confirm('⚠️ آیا مطمئن هستید همه را پاک کنید؟')) {
-                games = [];
-                saveGames();
-                document.getElementById('receipt').classList.remove('show');
-            }
         }
 
         renderGames();
